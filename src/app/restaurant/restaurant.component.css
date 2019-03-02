@@ -1,0 +1,9 @@
+@import "../app.component.css";  
+
+.pagination {
+    display: inline-flex;
+}
+
+.restaurant-name {
+    font-size: 20px;
+}

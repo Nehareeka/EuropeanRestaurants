@@ -1,0 +1,51 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-6">
+            <input *ngIf="config?.filtering" placeholder="Search (by name or cuisine)" [appFilter]="config?.filtering" class="form-control"
+                (tableChanged)="onChangeTable(config)" />
+        </div>
+        <div class="col-md-2 offset-md-4" *ngIf="config">
+            <div [appSort]="config" [column]="columns[4]" (sortChanged)="onChangeTable($event)">Sort by User Rating
+                <i class="pull-right fa" [ngClass]="{'fa-chevron-down': columns[4]?.sort === 'desc', 'fa-chevron-up': columns[4]?.sort === 'asc'}"></i>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+    <div class="row">
+        <div class="col-md-6" *ngFor="let r of pagedItems">
+            <div class="card bg-light p-1 m-1">
+                <div class="restaurant-name">{{r.Name}} </div>
+                <div>{{r.City}}</div>
+                <div>{{r.CuisineStyle}}</div>
+                <hr>
+                <div *ngIf="r.Rating!=''">
+                    <star-rating [rating]="r?.Rating">
+                    </star-rating>
+                </div>
+                <div>{{r.NumberofReviews!="" ? r.NumberofReviews : 0}} reviews</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="text-center">
+    <!-- pager -->
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+            <a class="page-link" (click)="setPage(1)">First</a>
+        </li>
+        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+            <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+        </li>
+        <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+            <a class="page-link" (click)="setPage(page)">{{page}}</a>
+        </li>
+        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+        </li>
+        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+            <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+        </li>
+    </ul>
+</div>
