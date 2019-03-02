@@ -6,10 +6,10 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class DataService {
     constructor(private http: HttpClient) {}
-    private _movieUrl = '../../assets/restaurantList.csv'; 
+    private _csvFilePath = '../../assets/restaurantList.csv'; 
    
     getAllRestaurants() {
-        return this.http.get(this._movieUrl, {'responseType': 'text'})
+        return this.http.get(this._csvFilePath, {'responseType': 'text'})
             .pipe(map((data) => {
                 return data;
             }));
